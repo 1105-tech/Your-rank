@@ -18,6 +18,40 @@
 
   <br><br>
 
-  <button>SUBMIT</button>
+  <button onclick="testTCS()">SUBMIT</button>
+
+<script>
+async function testTCS() {
+
+    const url = document.querySelector("input").value;
+
+    if (!url) {
+        alert("Please paste your TCS Response Sheet URL.");
+        return;
+    }
+
+    try {
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("Unable to access response sheet");
+        }
+
+        const html = await response.text();
+
+        console.log(html);
+
+        alert("TCS response sheet accessed successfully!");
+
+    } catch (error) {
+
+        console.log(error);
+
+        alert("TCS response sheet could not be accessed directly.");
+
+    }
+}
+</script>
 </body>
 </html>
