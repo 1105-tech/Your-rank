@@ -3,14 +3,137 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your-Rank</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 20px;
+      margin-top: 0;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #555;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #111;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      background: #999;
+    }
+
+    #loading {
+      display: none;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    #result {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .result-card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .result-title {
+      padding: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      background: #eee;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 11px 14px;
+      border-top: 1px solid #eee;
+      gap: 15px;
+    }
+
+    .row span:first-child {
+      font-weight: bold;
+    }
+
+    .row span:last-child {
+      text-align: right;
+    }
+
+    .score {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .error {
+      margin-top: 15px;
+      padding: 12px;
+      background: #ffe5e5;
+      color: #b00000;
+      border-radius: 6px;
+    }
+  </style>
 </head>
 
-<bodyAnalysis
+<body>
+
+<div class="container">
+
   <h1>YOUR-RANK</h1>
 
-<h2>माथाडी कामगार Direct Recruitment 2026 Exam</h2>
+  <h2>माथाडी कामगार Direct Recruitment 2026 Exam</h2>
 
-<p>Rank & Score Analysis</p>
+  <p class="subtitle">Rank & Score Analysis</p>
 
   <label>Response Sheet URL</label>
   <br><br>
@@ -18,13 +141,12 @@
   <input
     type="text"
     id="tcsUrl"
-    placeholder="Paste your URL here"
+    placeholder="Paste your response sheet URL here"
   >
 
   <br><br>
 
   <label>Category</label>
-  <br>
 
   <select id="category">
     <option value="">Select Category</option>
@@ -39,7 +161,6 @@
   <br><br>
 
   <label>Gender</label>
-  <br>
 
   <select id="gender">
     <option value="">Select Gender</option>
@@ -50,7 +171,6 @@
   <br><br>
 
   <label>Horizontal Reservation</label>
-  <br>
 
   <select id="horizontal">
     <option value="None">None</option>
@@ -60,87 +180,231 @@
 
   <br><br>
 
-  <button onclick="submitCandidate()">SUBMIT</button>
+  <button id="submitBtn" onclick="submitCandidate()">
+    SUBMIT
+  </button>
 
-  <pre id="result"></pre>
+  <div id="loading">
+    Processing response sheet...
+  </div>
+
+  <div id="error"></div>
+
+  <div id="result">
+
+    <div class="result-card">
+
+      <div class="result-title">
+        Candidate Result
+      </div>
+
+      <div class="score" id="score"></div>
+
+      <div class="row">
+        <span>Name</span>
+        <span id="name"></span>
+      </div>
+
+      <div class="row">
+        <span>Roll Number</span>
+        <span id="roll"></span>
+      </div>
+
+      <div class="row">
+        <span>Center</span>
+        <span id="center"></span>
+      </div>
+
+      <div class="row">
+        <span>Exam Date</span>
+        <span id="date"></span>
+      </div>
+
+      <div class="row">
+        <span>Exam Time</span>
+        <span id="time"></span>
+      </div>
+
+      <div class="row">
+        <span>Post</span>
+        <span id="post"></span>
+      </div>
+
+      <div class="row">
+        <span>Shift</span>
+        <span id="shift"></span>
+      </div>
+
+      <div class="row">
+        <span>Category</span>
+        <span id="categoryResult"></span>
+      </div>
+
+      <div class="row">
+        <span>Gender</span>
+        <span id="genderResult"></span>
+      </div>
+
+      <div class="row">
+        <span>Horizontal Reservation</span>
+        <span id="horizontalResult"></span>
+      </div>
+
+      <div class="row">
+        <span>Total Questions</span>
+        <span id="questions"></span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
 
 <script>
 
 async function submitCandidate() {
 
-    const tcsUrl =
-        document.getElementById("tcsUrl").value.trim();
+  const tcsUrl =
+    document.getElementById("tcsUrl").value.trim();
 
-    const category =
-        document.getElementById("category").value;
+  const category =
+    document.getElementById("category").value;
 
-    const gender =
-        document.getElementById("gender").value;
+  const gender =
+    document.getElementById("gender").value;
 
-    const horizontal =
-        document.getElementById("horizontal").value;
+  const horizontal =
+    document.getElementById("horizontal").value;
 
 
-    if (!tcsUrl) {
-        alert("Please paste your TCS Response Sheet URL.");
-        return;
+  if (!tcsUrl) {
+    alert("Please paste your response sheet URL.");
+    return;
+  }
+
+
+  if (!category) {
+    alert("Please select your category.");
+    return;
+  }
+
+
+  if (!gender) {
+    alert("Please select your gender.");
+    return;
+  }
+
+
+  const submitBtn =
+    document.getElementById("submitBtn");
+
+  const loading =
+    document.getElementById("loading");
+
+  const result =
+    document.getElementById("result");
+
+  const error =
+    document.getElementById("error");
+
+
+  submitBtn.disabled = true;
+
+  loading.style.display = "block";
+
+  result.style.display = "none";
+
+  error.innerHTML = "";
+
+
+  try {
+
+    const workerUrl =
+      "https://your-rank-api.c2721383.workers.dev";
+
+
+    const submitUrl =
+      workerUrl +
+      "/submit?url=" +
+      encodeURIComponent(tcsUrl) +
+      "&category=" +
+      encodeURIComponent(category) +
+      "&gender=" +
+      encodeURIComponent(gender) +
+      "&horizontal=" +
+      encodeURIComponent(horizontal);
+
+
+    const response =
+      await fetch(submitUrl);
+
+
+    const data =
+      await response.json();
+
+
+    if (!data.success) {
+
+      throw new Error(
+        data.error || "Submission failed."
+      );
+
     }
 
 
-    if (!category) {
-        alert("Please select your category.");
-        return;
-    }
+    document.getElementById("score").textContent =
+      "Score: " + data.score;
 
 
-    if (!gender) {
-        alert("Please select your gender.");
-        return;
-    }
+    document.getElementById("categoryResult").textContent =
+      data.category;
 
 
-    try {
-
-        const workerUrl =
-            "https://your-rank-api.c2721383.workers.dev";
+    document.getElementById("genderResult").textContent =
+      data.gender;
 
 
-        const submitUrl =
-            workerUrl +
-            "/submit?url=" +
-            encodeURIComponent(tcsUrl) +
-            "&category=" +
-            encodeURIComponent(category) +
-            "&gender=" +
-            encodeURIComponent(gender) +
-            "&horizontal=" +
-            encodeURIComponent(horizontal);
+    document.getElementById("horizontalResult").textContent =
+      data.horizontal_reservation;
 
 
-        const response =
-            await fetch(submitUrl);
+    document.getElementById("shift").textContent =
+      data.shift;
 
 
-        const data =
-            await response.json();
+    document.getElementById("questions").textContent =
+      data.total_questions;
 
 
-        document.getElementById("result").textContent =
-            JSON.stringify(data, null, 2);
+    /*
+      Candidate details are returned
+      after the next Worker update.
+    */
+
+    result.style.display = "block";
 
 
-    } catch (error) {
+  } catch (error) {
 
-        console.log(error);
+    console.log(error);
 
-        document.getElementById("result").textContent =
-            "Error: " + error.message;
+    error.innerHTML =
+      '<div class="error">' +
+      error.message +
+      '</div>';
 
-    }
+  }
+
+
+  loading.style.display = "none";
+
+  submitBtn.disabled = false;
 
 }
 
 </script>
 
 </body>
-  </html>
+      </html>
