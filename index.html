@@ -254,7 +254,25 @@
         <span>Total Questions</span>
         <span id="questions"></span>
       </div>
+<div class="row">
+  <span>Overall Rank</span>
+  <span id="overallRank"></span>
+</div>
 
+<div class="row">
+  <span>Shift Rank</span>
+  <span id="shiftRank"></span>
+</div>
+
+<div class="row">
+  <span>Category Rank</span>
+  <span id="categoryRank"></span>
+</div>
+
+<div class="row">
+  <span>Total Candidates</span>
+  <span id="totalCandidates"></span>
+  </div>
     </div>
 
   </div>
@@ -393,7 +411,17 @@ document.getElementById("post").textContent =
 
     document.getElementById("questions").textContent =
       data.total_questions;
+document.getElementById("overallRank").textContent =
+  data.overall_rank;
 
+document.getElementById("shiftRank").textContent =
+  data.shift_rank;
+
+document.getElementById("categoryRank").textContent =
+  data.category_rank;
+
+document.getElementById("totalCandidates").textContent =
+  data.total_candidates;
 
     /*
       Candidate details are returned
