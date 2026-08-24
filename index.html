@@ -265,6 +265,23 @@
 <script>
 
 async function submitCandidate() {
+  document.getElementById("name").textContent =
+  data.candidate.name || "-";
+
+document.getElementById("roll").textContent =
+  data.candidate.roll_number || "-";
+
+document.getElementById("center").textContent =
+  data.candidate.center || "-";
+
+document.getElementById("date").textContent =
+  data.candidate.test_date || "-";
+
+document.getElementById("time").textContent =
+  data.candidate.test_time || "-";
+
+document.getElementById("post").textContent =
+  data.candidate.post || "-";
 
   const tcsUrl =
     document.getElementById("tcsUrl").value.trim();
