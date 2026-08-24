@@ -275,24 +275,40 @@
         <span id="totalCandidates"></span>
       </div>
 
-      <div class="row">
+            <div class="row">
         <span>Shift Candidates</span>
         <span id="shiftCandidates"></span>
       </div>
 
       <div class="row">
-        <span>Shift 1 Candidates</span>
-        <span id="shift1Candidates"></span>
+        <span>29 July Shift 1 Candidates</span>
+        <span id="shift29_1Candidates"></span>
       </div>
 
       <div class="row">
-        <span>Shift 2 Candidates</span>
-        <span id="shift2Candidates"></span>
+        <span>29 July Shift 2 Candidates</span>
+        <span id="shift29_2Candidates"></span>
       </div>
 
       <div class="row">
-        <span>Shift 3 Candidates</span>
-        <span id="shift3Candidates"></span>
+        <span>29 July Shift 3 Candidates</span>
+        <span id="shift29_3Candidates"></span>
+      </div>
+
+      <div class="row">
+        <span>30 July Shift 1 Candidates</span>
+        <span id="shift30_1Candidates"></span>
+      </div>
+
+      <div class="row">
+        <span>30 July Shift 2 Candidates</span>
+        <span id="shift30_2Candidates"></span>
+      </div>
+
+      <div class="row">
+        <span>30 July Shift 3 Candidates</span>
+        <span id="shift30_3Candidates"></span>
+      </div>
       </div>
 
     </div>
@@ -440,18 +456,23 @@ async function submitCandidate() {
     document.getElementById("totalCandidates").textContent =
       data.total_candidates ?? "-";
 
-    document.getElementById("shiftCandidates").textContent =
-      data.shift_candidates ?? "-";
+    document.getElementById("shift29_1Candidates").textContent =
+  data.shift29_1_candidates ?? "-";
 
+document.getElementById("shift29_2Candidates").textContent =
+  data.shift29_2_candidates ?? "-";
 
-    document.getElementById("shift1Candidates").textContent =
-      data.shift1_candidates ?? "-";
+document.getElementById("shift29_3Candidates").textContent =
+  data.shift29_3_candidates ?? "-";
 
-    document.getElementById("shift2Candidates").textContent =
-      data.shift2_candidates ?? "-";
+document.getElementById("shift30_1Candidates").textContent =
+  data.shift30_1_candidates ?? "-";
 
-    document.getElementById("shift3Candidates").textContent =
-      data.shift3_candidates ?? "-";
+document.getElementById("shift30_2Candidates").textContent =
+  data.shift30_2_candidates ?? "-";
+
+document.getElementById("shift30_3Candidates").textContent =
+  data.shift30_3_candidates ?? "-";
 
 
     result.style.display = "block";
