@@ -254,43 +254,47 @@
         <span>Total Questions</span>
         <span id="questions"></span>
       </div>
-<div class="row">
-  <span>Overall Rank</span>
-  <span id="overallRank"></span>
-</div>
 
-<div class="row">
-  <span>Shift Rank</span>
-  <span id="shiftRank"></span>
-</div>
-
-<div class="row">
-  <span>Category Rank</span>
-  <span id="categoryRank"></span>
-</div>
-
-<div class="row">
-  <span>Total Candidates</span>
-  <span id="totalCandidates"></span>
-  </div>
       <div class="row">
-  <span>Shift Candidates</span>
-  <span id="shiftCandidates"></span>
+        <span>Overall Rank</span>
+        <span id="overallRank"></span>
       </div>
+
       <div class="row">
-  <span>Shift 1 Candidates</span>
-  <span id="shift1Candidates"></span>
-</div>
+        <span>Shift Rank</span>
+        <span id="shiftRank"></span>
+      </div>
 
-<div class="row">
-  <span>Shift 2 Candidates</span>
-  <span id="shift2Candidates"></span>
-</div>
+      <div class="row">
+        <span>Category Rank</span>
+        <span id="categoryRank"></span>
+      </div>
 
-<div class="row">
-  <span>Shift 3 Candidates</span>
-  <span id="shift3Candidates"></span>
-</div>
+      <div class="row">
+        <span>Total Candidates</span>
+        <span id="totalCandidates"></span>
+      </div>
+
+      <div class="row">
+        <span>Shift Candidates</span>
+        <span id="shiftCandidates"></span>
+      </div>
+
+      <div class="row">
+        <span>Shift 1 Candidates</span>
+        <span id="shift1Candidates"></span>
+      </div>
+
+      <div class="row">
+        <span>Shift 2 Candidates</span>
+        <span id="shift2Candidates"></span>
+      </div>
+
+      <div class="row">
+        <span>Shift 3 Candidates</span>
+        <span id="shift3Candidates"></span>
+      </div>
+
     </div>
 
   </div>
@@ -301,7 +305,6 @@
 <script>
 
 async function submitCandidate() {
- 
 
   const tcsUrl =
     document.getElementById("tcsUrl").value.trim();
@@ -321,12 +324,10 @@ async function submitCandidate() {
     return;
   }
 
-
   if (!category) {
     alert("Please select your category.");
     return;
   }
-
 
   if (!gender) {
     alert("Please select your gender.");
@@ -343,17 +344,14 @@ async function submitCandidate() {
   const result =
     document.getElementById("result");
 
-  const error =
+  const errorBox =
     document.getElementById("error");
 
 
   submitBtn.disabled = true;
-
   loading.style.display = "block";
-
   result.style.display = "none";
-
-  error.innerHTML = "";
+  errorBox.innerHTML = "";
 
 
   try {
@@ -380,31 +378,35 @@ async function submitCandidate() {
 
     const data =
       await response.json();
-document.getElementById("name").textContent =
-  data.candidate.name || "-";
 
-document.getElementById("roll").textContent =
-  data.candidate.roll_number || "-";
-
-document.getElementById("center").textContent =
-  data.candidate.center || "-";
-
-document.getElementById("date").textContent =
-  data.candidate.test_date || "-";
-
-document.getElementById("time").textContent =
-  data.candidate.test_time || "-";
-
-document.getElementById("post").textContent =
-  data.candidate.post || "-";
 
     if (!data.success) {
-
       throw new Error(
         data.error || "Submission failed."
       );
-
     }
+
+
+    document.getElementById("name").textContent =
+      data.candidate?.name || "-";
+
+    document.getElementById("roll").textContent =
+      data.candidate?.roll_number || "-";
+
+    document.getElementById("center").textContent =
+      data.candidate?.center || "-";
+
+    document.getElementById("date").textContent =
+      data.candidate?.test_date || "-";
+
+    document.getElementById("time").textContent =
+      data.candidate?.test_time || "-";
+
+    document.getElementById("post").textContent =
+      data.candidate?.post || "-";
+
+    document.getElementById("shift").textContent =
+      data.shift || "-";
 
 
     document.getElementById("score").textContent =
@@ -412,66 +414,62 @@ document.getElementById("post").textContent =
 
 
     document.getElementById("categoryResult").textContent =
-      data.category;
-
+      data.category || "-";
 
     document.getElementById("genderResult").textContent =
-      data.gender;
-
+      data.gender || "-";
 
     document.getElementById("horizontalResult").textContent =
-      data.horizontal_reservation;
-
-
-    document.getElementById("shift").textContent =
-      data.shift;
+      data.horizontal_reservation || "-";
 
 
     document.getElementById("questions").textContent =
-      data.total_questions;
-document.getElementById("overallRank").textContent =
-  data.overall_rank;
+      data.total_questions ?? "-";
 
-document.getElementById("shiftRank").textContent =
-  data.shift_rank;
 
-document.getElementById("categoryRank").textContent =
-  data.category_rank;
+    document.getElementById("overallRank").textContent =
+      data.overall_rank ?? "-";
 
-document.getElementById("totalCandidates").textContent =
-  data.total_candidates;
-document.getElementById("shiftCandidates").textContent =
-  data.shift_candidates;
+    document.getElementById("shiftRank").textContent =
+      data.shift_rank ?? "-";
+
+    document.getElementById("categoryRank").textContent =
+      data.category_rank ?? "-";
+
+
+    document.getElementById("totalCandidates").textContent =
+      data.total_candidates ?? "-";
+
+    document.getElementById("shiftCandidates").textContent =
+      data.shift_candidates ?? "-";
+
+
     document.getElementById("shift1Candidates").textContent =
-  data.shift1_candidates;
+      data.shift1_candidates ?? "-";
 
-document.getElementById("shift2Candidates").textContent =
-  data.shift2_candidates;
+    document.getElementById("shift2Candidates").textContent =
+      data.shift2_candidates ?? "-";
 
-document.getElementById("shift3Candidates").textContent =
-  data.shift3_candidates;
-    /*
-      Candidate details are returned
-      after the next Worker update.
-    */
+    document.getElementById("shift3Candidates").textContent =
+      data.shift3_candidates ?? "-";
+
 
     result.style.display = "block";
 
 
-  } catch (error) {
+  } catch (err) {
 
-    console.log(error);
+    console.log(err);
 
-    error.innerHTML =
+    errorBox.innerHTML =
       '<div class="error">' +
-      error.message +
+      (err.message || "Something went wrong.") +
       '</div>';
 
   }
 
 
   loading.style.display = "none";
-
   submitBtn.disabled = false;
 
 }
@@ -479,4 +477,4 @@ document.getElementById("shift3Candidates").textContent =
 </script>
 
 </body>
-  </html>
+                           </html>
