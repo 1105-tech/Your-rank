@@ -273,6 +273,10 @@
   <span>Total Candidates</span>
   <span id="totalCandidates"></span>
   </div>
+      <div class="row">
+  <span>Shift Candidates</span>
+  <span id="shiftCandidates"></span>
+      </div>
     </div>
 
   </div>
@@ -422,7 +426,8 @@ document.getElementById("categoryRank").textContent =
 
 document.getElementById("totalCandidates").textContent =
   data.total_candidates;
-
+document.getElementById("shiftCandidates").textContent =
+  data.shift_candidates;
     /*
       Candidate details are returned
       after the next Worker update.
