@@ -277,6 +277,20 @@
   <span>Shift Candidates</span>
   <span id="shiftCandidates"></span>
       </div>
+      <div class="row">
+  <span>Shift 1 Candidates</span>
+  <span id="shift1Candidates"></span>
+</div>
+
+<div class="row">
+  <span>Shift 2 Candidates</span>
+  <span id="shift2Candidates"></span>
+</div>
+
+<div class="row">
+  <span>Shift 3 Candidates</span>
+  <span id="shift3Candidates"></span>
+</div>
     </div>
 
   </div>
@@ -428,6 +442,14 @@ document.getElementById("totalCandidates").textContent =
   data.total_candidates;
 document.getElementById("shiftCandidates").textContent =
   data.shift_candidates;
+    document.getElementById("shift1Candidates").textContent =
+  data.shift1_candidates;
+
+document.getElementById("shift2Candidates").textContent =
+  data.shift2_candidates;
+
+document.getElementById("shift3Candidates").textContent =
+  data.shift3_candidates;
     /*
       Candidate details are returned
       after the next Worker update.
