@@ -14,44 +14,132 @@
   <label>TCS Response Sheet URL</label>
   <br><br>
 
-  <input type="text" placeholder="Paste your TCS URL here">
+  <input
+    type="text"
+    id="tcsUrl"
+    placeholder="Paste your TCS URL here"
+  >
 
   <br><br>
 
-  <button onclick="testTCS()">SUBMIT</button>
+  <label>Category</label>
+  <br>
+
+  <select id="category">
+    <option value="">Select Category</option>
+    <option value="Open">Open</option>
+    <option value="SC">SC</option>
+    <option value="ST">ST</option>
+    <option value="VJA">VJA</option>
+    <option value="OBC">OBC</option>
+    <option value="SEBC">SEBC</option>
+  </select>
+
+  <br><br>
+
+  <label>Gender</label>
+  <br>
+
+  <select id="gender">
+    <option value="">Select Gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+  </select>
+
+  <br><br>
+
+  <label>Horizontal Reservation</label>
+  <br>
+
+  <select id="horizontal">
+    <option value="None">None</option>
+    <option value="Female">Female</option>
+    <option value="Ex-Servicemen">Ex-Servicemen</option>
+  </select>
+
+  <br><br>
+
+  <button onclick="submitCandidate()">SUBMIT</button>
+
+  <pre id="result"></pre>
 
 <script>
-async function testTCS() {
 
-    const url = document.querySelector("input").value;
+async function submitCandidate() {
 
-    if (!url) {
+    const tcsUrl =
+        document.getElementById("tcsUrl").value.trim();
+
+    const category =
+        document.getElementById("category").value;
+
+    const gender =
+        document.getElementById("gender").value;
+
+    const horizontal =
+        document.getElementById("horizontal").value;
+
+
+    if (!tcsUrl) {
         alert("Please paste your TCS Response Sheet URL.");
         return;
     }
 
+
+    if (!category) {
+        alert("Please select your category.");
+        return;
+    }
+
+
+    if (!gender) {
+        alert("Please select your gender.");
+        return;
+    }
+
+
     try {
 
-        const response = await fetch(url);
+        const workerUrl =
+            "https://your-rank-api.c2721383.workers.dev";
 
-        if (!response.ok) {
-            throw new Error("Unable to access response sheet");
-        }
 
-        const html = await response.text();
+        const submitUrl =
+            workerUrl +
+            "/submit?url=" +
+            encodeURIComponent(tcsUrl) +
+            "&category=" +
+            encodeURIComponent(category) +
+            "&gender=" +
+            encodeURIComponent(gender) +
+            "&horizontal=" +
+            encodeURIComponent(horizontal);
 
-        console.log(html);
 
-        alert("TCS response sheet accessed successfully!");
+        const response =
+            await fetch(submitUrl);
+
+
+        const data =
+            await response.json();
+
+
+        document.getElementById("result").textContent =
+            JSON.stringify(data, null, 2);
+
 
     } catch (error) {
 
         console.log(error);
 
-        alert("TCS response sheet could not be accessed directly.");
+        document.getElementById("result").textContent =
+            "Error: " + error.message;
 
     }
+
 }
+
 </script>
+
 </body>
-</html>
+  </html>
