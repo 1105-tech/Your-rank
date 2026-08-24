@@ -455,7 +455,8 @@ async function submitCandidate() {
 
     document.getElementById("totalCandidates").textContent =
       data.total_candidates ?? "-";
-
+document.getElementById("shiftCandidates").textContent =
+  data.shift_candidates ?? "-";
     document.getElementById("shift29_1Candidates").textContent =
   data.shift29_1_candidates ?? "-";
 
