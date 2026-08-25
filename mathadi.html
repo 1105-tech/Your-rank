@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RANKCHASE</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 20px;
+      margin-top: 0;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #555;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #111;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      background: #999;
+    }
+
+    #loading {
+      display: none;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    #result {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .result-card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .result-title {
+      padding: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      background: #eee;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 11px 14px;
+      border-top: 1px solid #eee;
+      gap: 15px;
+    }
+
+    .row span:first-child {
+      font-weight: bold;
+    }
+
+    .row span:last-child {
+      text-align: right;
+    }
+
+    .score {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .error {
+      margin-top: 15px;
+      padding: 12px;
+      background: #ffe5e5;
+      color: #b00000;
+      border-radius: 6px;
+    } 
+    .consent-box {
+  margin: 12px 0;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.consent-box label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.consent-box input[type="checkbox"] {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>RANKCHASE</h1>
+
+  <h2>माथाडी कामगार Direct Recruitment 2026 Exam</h2>
+
+  <p class="subtitle">Rank & Score Analysis</p>
+
+  <label>Response Sheet URL</label>
+  <br><br>
+
+  <input
+    type="text"
+    id="tcsUrl"
+    placeholder="Paste your response sheet URL here"
+  >
+
+  <br><br>
+
+  <label>Category</label>
+
+  <select id="category">
+    <option value="">Select Category</option>
+    <option value="Open">Open</option>
+    <option value="SC">SC</option>
+    <option value="ST">ST</option>
+    <option value="VJA">VJA</option>
+    <option value="OBC">OBC</option>
+    <option value="SEBC">SEBC</option>
+  </select>
+
+  <br><br>
+
+  <label>Gender</label>
+
+  <select id="gender">
+    <option value="">Select Gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+  </select>
+
+  <br><br>
+
+  <label>Horizontal Reservation</label>
+
+  <select id="horizontal">
+    <option value="None">None</option>
+    <option value="Female">Female</option>
+    <option value="Ex-Servicemen">Ex-Servicemen</option>
+  </select>
+
+  <br><br>
+<div class="consent-box">
+  <label>
+    <input type="checkbox" id="consentCheckbox">
+    <span>
+      By submitting this form, you agree that your exam data will be used
+      to generate personalized reports and aggregated insights.
+    </span>
+  </label>
+        </div>
+  <button id="submitBtn" onclick="submitCandidate()">
+    SUBMIT
+  </button>
+
+  <div id="loading">
+    Processing response sheet...
+  </div>
+
+  <div id="error"></div>
+
+  <div id="result">
+
+    <div class="result-card">
+
+      <div class="result-title">
+        Candidate Result
+      </div>
+
+      <div class="score" id="score"></div>
+
+      <div class="row">
+        <span>Name</span>
+        <span id="name"></span>
+      </div>
+
+      <div class="row">
+        <span>Roll Number</span>
+        <span id="roll"></span>
+      </div>
+
+      <div class="row">
+        <span>Center</span>
+        <span id="center"></span>
+      </div>
+
+      <div class="row">
+        <span>Exam Date</span>
+        <span id="date"></span>
+      </div>
+
+      <div class="row">
+        <span>Exam Time</span>
+        <span id="time"></span>
+      </div>
+
+      <div class="row">
+        <span>Post</span>
+        <span id="post"></span>
+      </div>
+
+      <div class="row">
+        <span>Shift</span>
+        <span id="shift"></span>
+      </div>
+
+      <div class="row">
+        <span>Category</span>
+        <span id="categoryResult"></span>
+      </div>
+      <div class="top-section">
+  <h3>Overall Top 10</h3>
+
+  <table id="overallTop10Table">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Category</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+
+    <tbody id="overallTop10Body">
+  <div class="top-section">
+  <h3>Shift-wise Top 10</h3>
+
+  <table id="shiftTop10Table">
+    <thead>
+      <tr>
+        <th>Shift</th>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Category</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+
+    <tbody id="shiftTop10Body"></tbody>
+  </table>
+  </div>
+      <div class="top-section">
+  <h3>Category-wise Top 10</h3>
+
+  <h4>OPEN Top 10</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+    <tbody id="categoryOpenTop10Body"></tbody>
+  </table>
+
+  <h4>SC Top 10</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+    <tbody id="categoryScTop10Body"></tbody>
+  </table>
+
+  <h4>OBC Top 10</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+    <tbody id="categoryObcTop10Body"></tbody>
+  </table>
+
+  <h4>SEBC Top 10</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+    <tbody id="categorySebcTop10Body"></tbody>
+  </table>
+
+  <h4>VJA Top 10</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+    <tbody id="categoryVjaTop10Body"></tbody>
+  </table>
+
+  <h4>ST Top 10</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+    <tbody id="categoryStTop10Body"></tbody>
+  </table>
+      </div>
+    </tbody>
+      </div>
+
+      <div class="row">
+        <span>Gender</span>
+        <span id="genderResult"></span>
+      </div>
+
+      <div class="row">
+        <span>Horizontal Reservation</span>
+        <span id="horizontalResult"></span>
+      </div>
+
+      <div class="row">
+        <span>Total Questions</span>
+        <span id="questions"></span>
+      </div> 
+      <div class="row">
+  <span>Overall Average</span>
+  <span id="overallAverage"></span>
+</div>
+
+<div class="row">
+  <span>Overall Standard Deviation</span>
+  <span id="overallSD"></span>
+</div>
+
+<div class="row">
+  <span>Shift Average</span>
+  <span id="shiftAverage"></span>
+</div>
+
+<div class="row">
+  <span>Shift Standard Deviation</span>
+  <span id="shiftSD"></span>
+</div>
+
+<div class="row">
+  <span>Shift Top 0.1% Average</span>
+  <span id="shiftTopAverage"></span>
+</div>
+      <div class="row">
+  <span>Normalized Score</span>
+  <span id="normalizedScore"></span>
+</div>
+
+<div class="row">
+  <span>Normalized Rank</span>
+  <span id="normalizedRank"></span>
+</div> 
+
+      <div class="row">
+        <span>Overall Rank</span>
+        <span id="overallRank"></span>
+      </div>
+
+      <div class="row">
+        <span>Shift Rank</span>
+        <span id="shiftRank"></span>
+      </div>
+
+      <div class="row">
+        <span>Category Rank</span>
+        <span id="categoryRank"></span>
+      </div>
+      <div class="row">
+  <span>Category Candidates</span>
+  <span id="categoryCandidates"></span>
+      </div>
+
+      <div class="row">
+        <span>Total Candidates</span>
+        <span id="totalCandidates"></span>
+      </div>
+
+            <div class="row">
+        <span>Shift Candidates</span>
+        <span id="shiftCandidates"></span>
+      </div>
+
+      <div class="row">
+        <span>29 July Shift 1 Candidates</span>
+        <span id="shift29_1Candidates"></span>
+      </div>
+
+      <div class="row">
+        <span>29 July Shift 2 Candidates</span>
+        <span id="shift29_2Candidates"></span>
+      </div>
+
+      <div class="row">
+        <span>29 July Shift 3 Candidates</span>
+        <span id="shift29_3Candidates"></span>
+      </div>
+
+      <div class="row">
+        <span>30 July Shift 1 Candidates</span>
+        <span id="shift30_1Candidates"></span>
+      </div>
+
+      <div class="row">
+        <span>30 July Shift 2 Candidates</span>
+        <span id="shift30_2Candidates"></span>
+      </div>
+
+      <div class="row">
+        <span>30 July Shift 3 Candidates</span>
+        <span id="shift30_3Candidates"></span>
+      </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+async function submitCandidate() { 
+  const consentCheckbox =
+  document.getElementById("consentCheckbox");
+
+if (!consentCheckbox.checked) {
+  alert("Please agree to the terms before submitting.");
+  return;
+}
+
+  const tcsUrl =
+    document.getElementById("tcsUrl").value.trim();
+
+  const category =
+    document.getElementById("category").value;
+
+  const gender =
+    document.getElementById("gender").value;
+
+  const horizontal =
+    document.getElementById("horizontal").value;
+
+
+  if (!tcsUrl) {
+    alert("Please paste your response sheet URL.");
+    return;
+  }
+
+  if (!category) {
+    alert("Please select your category.");
+    return;
+  }
+
+  if (!gender) {
+    alert("Please select your gender.");
+    return;
+  }
+
+
+  const submitBtn =
+    document.getElementById("submitBtn");
+
+  const loading =
+    document.getElementById("loading");
+
+  const result =
+    document.getElementById("result");
+
+  const errorBox =
+    document.getElementById("error");
+
+
+  submitBtn.disabled = true;
+  loading.style.display = "block";
+  result.style.display = "none";
+  errorBox.innerHTML = "";
+
+
+  try {
+
+    const workerUrl =
+      "https://your-rank-api.c2721383.workers.dev";
+
+
+    const submitUrl =
+      workerUrl +
+      "/submit?url=" +
+      encodeURIComponent(tcsUrl) +
+      "&category=" +
+      encodeURIComponent(category) +
+      "&gender=" +
+      encodeURIComponent(gender) +
+      "&horizontal=" +
+      encodeURIComponent(horizontal);
+
+
+    const response =
+      await fetch(submitUrl);
+
+
+    const data =
+      await response.json();
+
+
+    if (!data.success) {
+      throw new Error(
+        data.error || "Submission failed."
+      );
+    }
+
+
+    document.getElementById("name").textContent =
+      data.candidate?.name || "-";
+
+    document.getElementById("roll").textContent =
+      data.candidate?.roll_number || "-";
+
+    document.getElementById("center").textContent =
+      data.candidate?.center || "-";
+
+    document.getElementById("date").textContent =
+      data.candidate?.test_date || "-";
+
+    document.getElementById("time").textContent =
+      data.candidate?.test_time || "-";
+
+    document.getElementById("post").textContent =
+      data.candidate?.post || "-";
+
+    document.getElementById("shift").textContent =
+      data.shift || "-";
+
+
+    document.getElementById("score").textContent =
+      "Score: " + data.score;
+
+
+    document.getElementById("categoryResult").textContent =
+      data.category || "-";
+
+    document.getElementById("genderResult").textContent =
+      data.gender || "-";
+
+    document.getElementById("horizontalResult").textContent =
+      data.horizontal_reservation || "-";
+
+
+    document.getElementById("questions").textContent =
+      data.total_questions ?? "-";
+    document.getElementById("overallAverage").textContent =
+  data.overall_average != null
+    ? Number(data.overall_average).toFixed(2)
+    : "-";
+
+document.getElementById("overallSD").textContent =
+  data.overall_sd != null
+    ? Number(data.overall_sd).toFixed(2)
+    : "-";
+
+document.getElementById("shiftAverage").textContent =
+  data.shift_average != null
+    ? Number(data.shift_average).toFixed(2)
+    : "-";
+
+document.getElementById("shiftSD").textContent =
+  data.shift_sd != null
+    ? Number(data.shift_sd).toFixed(2)
+    : "-";
+
+document.getElementById("shiftTopAverage").textContent =
+  data.shift_top_average != null
+    ? Number(data.shift_top_average).toFixed(2)
+    : "-";
+    document.getElementById("normalizedScore").textContent =
+  data.normalized_score ?? "-";
+
+document.getElementById("normalizedRank").textContent =
+  data.normalized_rank ?? "-";
+
+
+    document.getElementById("overallRank").textContent =
+      data.overall_rank ?? "-";
+
+    document.getElementById("shiftRank").textContent =
+      data.shift_rank ?? "-";
+
+    document.getElementById("categoryRank").textContent =
+      data.category_rank ?? "-";
+    document.getElementById("categoryCandidates").textContent =
+  data.category_candidates ?? "-";
+
+
+    document.getElementById("totalCandidates").textContent =
+      data.total_candidates ?? "-";
+document.getElementById("shiftCandidates").textContent =
+  data.shift_candidates ?? "-";
+    document.getElementById("shift29_1Candidates").textContent =
+  data.shift29_1_candidates ?? "-";
+
+document.getElementById("shift29_2Candidates").textContent =
+  data.shift29_2_candidates ?? "-";
+
+document.getElementById("shift29_3Candidates").textContent =
+  data.shift29_3_candidates ?? "-";
+
+document.getElementById("shift30_1Candidates").textContent =
+  data.shift30_1_candidates ?? "-";
+
+document.getElementById("shift30_2Candidates").textContent =
+  data.shift30_2_candidates ?? "-";
+
+document.getElementById("shift30_3Candidates").textContent =
+  data.shift30_3_candidates ?? "-";
+    console.log("OVERALL TOP 10:", data.overall_top10);
+const overallTop10Body =
+  document.getElementById("overallTop10Body");
+
+overallTop10Body.innerHTML = "";
+
+(data.overall_top10 || []).forEach(candidate => {
+  const row = document.createElement("tr");
+
+  row.innerHTML = `
+    <td>${candidate.rank}</td>
+    <td>${candidate.score}</td>
+    <td>${candidate.category}</td>
+    <td>${candidate.gender}</td>
+    <td>${candidate.horizontal_reservation}</td>
+  `;
+
+  overallTop10Body.appendChild(row);
+});
+    const shiftTop10Body =
+  document.getElementById("shiftTop10Body");
+
+shiftTop10Body.innerHTML = "";
+
+const shiftNames = [
+  "29 July Shift 1",
+  "29 July Shift 2",
+  "29 July Shift 3",
+  "30 July Shift 1",
+  "30 July Shift 2",
+  "30 July Shift 3"
+];
+
+shiftNames.forEach(shiftName => {
+
+  const candidates = data.shift_top10?.[shiftName] || [];
+
+  candidates.forEach(candidate => {
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${shiftName}</td>
+      <td>${candidate.rank}</td>
+      <td>${candidate.score}</td>
+      <td>${candidate.category}</td>
+      <td>${candidate.gender}</td>
+      <td>${candidate.horizontal_reservation}</td>
+    `;
+
+    shiftTop10Body.appendChild(row);
+
+  });
+
+});
+const categoryBodies = {
+  OPEN: document.getElementById("categoryOpenTop10Body"),
+  SC: document.getElementById("categoryScTop10Body"),
+  OBC: document.getElementById("categoryObcTop10Body"),
+  SEBC: document.getElementById("categorySebcTop10Body"),
+  VJA: document.getElementById("categoryVjaTop10Body"),
+  ST: document.getElementById("categoryStTop10Body")
+};
+
+Object.entries(categoryBodies).forEach(([category, body]) => {
+
+  body.innerHTML = "";
+
+  const candidates =
+    data.category_top10?.[category] || [];
+
+  candidates.forEach(candidate => {
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${candidate.rank}</td>
+      <td>${candidate.score}</td>
+      <td>${candidate.gender}</td>
+      <td>${candidate.horizontal_reservation}</td>
+    `;
+
+    body.appendChild(row);
+  });
+
+});
+    result.style.display = "block";
+
+
+  } catch (err) {
+
+    console.log(err);
+
+    errorBox.innerHTML =
+      '<div class="error">' +
+      (err.message || "Something went wrong.") +
+      '</div>';
+
+  }
+
+
+  loading.style.display = "none";
+  submitBtn.disabled = false;
+
+}
+
+</script>
+
+</body>
+  </html>
