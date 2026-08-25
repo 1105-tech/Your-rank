@@ -272,6 +272,87 @@
     <tbody id="shiftTop10Body"></tbody>
   </table>
   </div>
+      <div class="top-section">
+  <h3>Category-wise Top 10</h3>
+
+  <h4>OPEN Top 10</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+    <tbody id="categoryOpenTop10Body"></tbody>
+  </table>
+
+  <h4>SC Top 10</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+    <tbody id="categoryScTop10Body"></tbody>
+  </table>
+
+  <h4>OBC Top 10</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+    <tbody id="categoryObcTop10Body"></tbody>
+  </table>
+
+  <h4>SEBC Top 10</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+    <tbody id="categorySebcTop10Body"></tbody>
+  </table>
+
+  <h4>VJA Top 10</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+    <tbody id="categoryVjaTop10Body"></tbody>
+  </table>
+
+  <h4>ST Top 10</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+    <tbody id="categoryStTop10Body"></tbody>
+  </table>
+      </div>
     </tbody>
       </div>
 
@@ -570,7 +651,37 @@ shiftNames.forEach(shiftName => {
   });
 
 });
+const categoryBodies = {
+  OPEN: document.getElementById("categoryOpenTop10Body"),
+  SC: document.getElementById("categoryScTop10Body"),
+  OBC: document.getElementById("categoryObcTop10Body"),
+  SEBC: document.getElementById("categorySebcTop10Body"),
+  VJA: document.getElementById("categoryVjaTop10Body"),
+  ST: document.getElementById("categoryStTop10Body")
+};
 
+Object.entries(categoryBodies).forEach(([category, body]) => {
+
+  body.innerHTML = "";
+
+  const candidates =
+    data.category_top10?.[category] || [];
+
+  candidates.forEach(candidate => {
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${candidate.rank}</td>
+      <td>${candidate.score}</td>
+      <td>${candidate.gender}</td>
+      <td>${candidate.horizontal_reservation}</td>
+    `;
+
+    body.appendChild(row);
+  });
+
+});
     result.style.display = "block";
 
 
