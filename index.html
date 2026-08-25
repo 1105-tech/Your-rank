@@ -239,6 +239,23 @@
         <span>Category</span>
         <span id="categoryResult"></span>
       </div>
+      <div class="top-section">
+  <h3>Overall Top 10</h3>
+
+  <table id="overallTop10Table">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Category</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+
+    <tbody id="overallTop10Body"></tbody>
+  </table>
+      </div>
 
       <div class="row">
         <span>Gender</span>
@@ -480,7 +497,24 @@ document.getElementById("shift30_2Candidates").textContent =
 
 document.getElementById("shift30_3Candidates").textContent =
   data.shift30_3_candidates ?? "-";
+const overallTop10Body =
+  document.getElementById("overallTop10Body");
 
+overallTop10Body.innerHTML = "";
+
+(data.overall_top10 || []).forEach(candidate => {
+  const row = document.createElement("tr");
+
+  row.innerHTML = `
+    <td>${candidate.rank}</td>
+    <td>${candidate.score}</td>
+    <td>${candidate.category}</td>
+    <td>${candidate.gender}</td>
+    <td>${candidate.horizontal_reservation}</td>
+  `;
+
+  overallTop10Body.appendChild(row);
+});
 
     result.style.display = "block";
 
