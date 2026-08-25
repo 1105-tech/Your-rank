@@ -269,6 +269,10 @@
         <span>Category Rank</span>
         <span id="categoryRank"></span>
       </div>
+      <div class="row">
+  <span>Category Candidates</span>
+  <span id="categoryCandidates"></span>
+      </div>
 
       <div class="row">
         <span>Total Candidates</span>
@@ -451,6 +455,8 @@ async function submitCandidate() {
 
     document.getElementById("categoryRank").textContent =
       data.category_rank ?? "-";
+    document.getElementById("categoryCandidates").textContent =
+  data.category_candidates ?? "-";
 
 
     document.getElementById("totalCandidates").textContent =
