@@ -370,6 +370,15 @@
         <span>Total Questions</span>
         <span id="questions"></span>
       </div>
+      <div class="row">
+  <span>Normalized Score</span>
+  <span id="normalizedScore"></span>
+</div>
+
+<div class="row">
+  <span>Normalized Rank</span>
+  <span id="normalizedRank"></span>
+</div> 
 
       <div class="row">
         <span>Overall Rank</span>
@@ -561,6 +570,11 @@ async function submitCandidate() {
 
     document.getElementById("questions").textContent =
       data.total_questions ?? "-";
+    document.getElementById("normalizedScore").textContent =
+  data.normalized_score ?? "-";
+
+document.getElementById("normalizedRank").textContent =
+  data.normalized_rank ?? "-";
 
 
     document.getElementById("overallRank").textContent =
