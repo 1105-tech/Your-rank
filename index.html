@@ -254,20 +254,24 @@
     </thead>
 
     <tbody id="overallTop10Body">
-  <tr>
-    <td>1</td>
-    <td>172</td>
-    <td>OBC</td>
-    <td>Male</td>
-    <td>None</td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>162</td>
-    <td>SC</td>
-    <td>Male</td>
-    <td>None</td>
-  </tr>
+  <div class="top-section">
+  <h3>Shift-wise Top 10</h3>
+
+  <table id="shiftTop10Table">
+    <thead>
+      <tr>
+        <th>Shift</th>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Category</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+
+    <tbody id="shiftTop10Body"></tbody>
+  </table>
+  </div>
     </tbody>
       </div>
 
@@ -533,6 +537,42 @@ overallTop10Body.innerHTML = "";
   `;
 
   overallTop10Body.appendChild(row);
+});
+    const shiftTop10Body =
+  document.getElementById("shiftTop10Body");
+
+shiftTop10Body.innerHTML = "";
+
+const shiftNames = [
+  "29 July Shift 1",
+  "29 July Shift 2",
+  "29 July Shift 3",
+  "30 July Shift 1",
+  "30 July Shift 2",
+  "30 July Shift 3"
+];
+
+shiftNames.forEach(shiftName => {
+
+  const candidates = data.shift_top10?.[shiftName] || [];
+
+  candidates.forEach(candidate => {
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${shiftName}</td>
+      <td>${candidate.rank}</td>
+      <td>${candidate.score}</td>
+      <td>${candidate.category}</td>
+      <td>${candidate.gender}</td>
+      <td>${candidate.horizontal_reservation}</td>
+    `;
+
+    shiftTop10Body.appendChild(row);
+
+  });
+
 });
 
     result.style.display = "block";
