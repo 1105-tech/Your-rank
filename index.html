@@ -121,7 +121,25 @@
       background: #ffe5e5;
       color: #b00000;
       border-radius: 6px;
-    }
+    } 
+    .consent-box {
+  margin: 12px 0;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.consent-box label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.consent-box input[type="checkbox"] {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
   </style>
 </head>
 
@@ -179,7 +197,15 @@
   </select>
 
   <br><br>
-
+<div class="consent-box">
+  <label>
+    <input type="checkbox" id="consentCheckbox">
+    <span>
+      By submitting this form, you agree that your exam data will be used
+      to generate personalized reports and aggregated insights.
+    </span>
+  </label>
+        </div>
   <button id="submitBtn" onclick="submitCandidate()">
     SUBMIT
   </button>
@@ -473,7 +499,14 @@
 
 <script>
 
-async function submitCandidate() {
+async function submitCandidate() { 
+  const consentCheckbox =
+  document.getElementById("consentCheckbox");
+
+if (!consentCheckbox.checked) {
+  alert("Please agree to the terms before submitting.");
+  return;
+}
 
   const tcsUrl =
     document.getElementById("tcsUrl").value.trim();
