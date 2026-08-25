@@ -369,7 +369,31 @@
       <div class="row">
         <span>Total Questions</span>
         <span id="questions"></span>
-      </div>
+      </div> 
+      <div class="row">
+  <span>Overall Average</span>
+  <span id="overallAverage"></span>
+</div>
+
+<div class="row">
+  <span>Overall Standard Deviation</span>
+  <span id="overallSD"></span>
+</div>
+
+<div class="row">
+  <span>Shift Average</span>
+  <span id="shiftAverage"></span>
+</div>
+
+<div class="row">
+  <span>Shift Standard Deviation</span>
+  <span id="shiftSD"></span>
+</div>
+
+<div class="row">
+  <span>Shift Top 0.1% Average</span>
+  <span id="shiftTopAverage"></span>
+</div>
       <div class="row">
   <span>Normalized Score</span>
   <span id="normalizedScore"></span>
@@ -570,6 +594,30 @@ async function submitCandidate() {
 
     document.getElementById("questions").textContent =
       data.total_questions ?? "-";
+    document.getElementById("overallAverage").textContent =
+  data.overall_average != null
+    ? Number(data.overall_average).toFixed(2)
+    : "-";
+
+document.getElementById("overallSD").textContent =
+  data.overall_sd != null
+    ? Number(data.overall_sd).toFixed(2)
+    : "-";
+
+document.getElementById("shiftAverage").textContent =
+  data.shift_average != null
+    ? Number(data.shift_average).toFixed(2)
+    : "-";
+
+document.getElementById("shiftSD").textContent =
+  data.shift_sd != null
+    ? Number(data.shift_sd).toFixed(2)
+    : "-";
+
+document.getElementById("shiftTopAverage").textContent =
+  data.shift_top_average != null
+    ? Number(data.shift_top_average).toFixed(2)
+    : "-";
     document.getElementById("normalizedScore").textContent =
   data.normalized_score ?? "-";
 
