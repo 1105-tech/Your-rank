@@ -518,11 +518,7 @@ document.getElementById("shift30_3Candidates").textContent =
     console.log("OVERALL TOP 10:", data.overall_top10);
 const overallTop10Body =
   document.getElementById("overallTop10Body");
-if (!data.overall_top10) {
-  alert("Top 10 data API मधून आले नाही.");
-} else {
-  alert("Top 10 data आले: " + data.overall_top10.length);
-  }
+
 overallTop10Body.innerHTML = "";
 
 (data.overall_top10 || []).forEach(candidate => {
