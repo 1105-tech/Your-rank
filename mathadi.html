@@ -685,44 +685,7 @@ const normalizedListResponse =
 const normalizedListData =
   await normalizedListResponse.json();
 
-if (normalizedListData.success) {
 
-  const normalizedBodies = {
-    Open: document.getElementById("normalizedOpenBody"),
-    SC: document.getElementById("normalizedScBody"),
-    ST: document.getElementById("normalizedStBody"),
-    VJA: document.getElementById("normalizedVjaBody"),
-    OBC: document.getElementById("normalizedObcBody"),
-    SEBC: document.getElementById("normalizedSebcBody")
-  };
-
-  Object.entries(normalizedBodies).forEach(
-    ([category, body]) => {
-
-      body.innerHTML = "";
-
-      const candidates =
-        normalizedListData.normalized_category_lists?.[category] || [];
-
-      candidates.forEach(candidate => {
-
-        const row =
-          document.createElement("tr");
-
-        row.innerHTML = `
-          <td>${candidate.rank}</td>
-          <td>${candidate.normalized_score}</td>
-          <td>${candidate.shift}</td>
-        `;
-
-        body.appendChild(row);
-
-      });
-
-    }
-  );
-
-  }
 
 
     if (!data.success) {
