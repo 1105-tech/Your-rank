@@ -305,9 +305,8 @@
 
     <tbody id="shiftTop10Body"></tbody>
   </table>
-  </div>
-      <div class="top-section"> 
-        <h3>Overall Normalised Rank</h3>
+  <div class="top-section" id="overallNormalizedSection"> 
+  <h3>Overall Normalised Rank</h3>
 
 <table>
   <thead>
@@ -846,6 +845,13 @@ normalizedCandidates.forEach(candidate => {
   overallNormalizedBody.appendChild(row);
 
 });
+    const overallNormalizedSection =
+  document.getElementById("overallNormalizedSection");
+
+if (overallNormalizedSection) {
+  overallNormalizedSection.style.display =
+    data.total_candidates >= 300 ? "block" : "none";
+}
     result.style.display = "block";
 
 
