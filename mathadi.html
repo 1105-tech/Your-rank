@@ -432,6 +432,83 @@
       <div class="row">
   <span>Normalized Category Rank</span>
   <span id="normalizedCategoryRank"></span>
+      </div> 
+      <div class="top-section">
+
+  <h3>Normalised Category-wise Score</h3>
+
+  <h4>Open</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Normalised Score</th>
+        <th>Shift</th>
+      </tr>
+    </thead>
+    <tbody id="normalizedOpenBody"></tbody>
+  </table>
+
+  <h4>SC</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Normalised Score</th>
+        <th>Shift</th>
+      </tr>
+    </thead>
+    <tbody id="normalizedScBody"></tbody>
+  </table>
+
+  <h4>ST</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Normalised Score</th>
+        <th>Shift</th>
+      </tr>
+    </thead>
+    <tbody id="normalizedStBody"></tbody>
+  </table>
+
+  <h4>VJA</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Normalised Score</th>
+        <th>Shift</th>
+      </tr>
+    </thead>
+    <tbody id="normalizedVjaBody"></tbody>
+  </table>
+
+  <h4>OBC</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Normalised Score</th>
+        <th>Shift</th>
+      </tr>
+    </thead>
+    <tbody id="normalizedObcBody"></tbody>
+  </table>
+
+  <h4>SEBC</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Normalised Score</th>
+        <th>Shift</th>
+      </tr>
+    </thead>
+    <tbody id="normalizedSebcBody"></tbody>
+  </table>
+
       </div>
 
       <div class="row">
@@ -584,6 +661,56 @@ if (!consentCheckbox.checked) {
 
     const data =
       await response.json();
+    // ========================================
+// NORMALISED CATEGORY-WISE SCORE LIST
+// ========================================
+
+const normalizedListResponse =
+  await fetch(
+    workerUrl + "/normalized-category-list"
+  );
+
+const normalizedListData =
+  await normalizedListResponse.json();
+
+if (normalizedListData.success) {
+
+  const normalizedBodies = {
+    Open: document.getElementById("normalizedOpenBody"),
+    SC: document.getElementById("normalizedScBody"),
+    ST: document.getElementById("normalizedStBody"),
+    VJA: document.getElementById("normalizedVjaBody"),
+    OBC: document.getElementById("normalizedObcBody"),
+    SEBC: document.getElementById("normalizedSebcBody")
+  };
+
+  Object.entries(normalizedBodies).forEach(
+    ([category, body]) => {
+
+      body.innerHTML = "";
+
+      const candidates =
+        normalizedListData.normalized_category_lists?.[category] || [];
+
+      candidates.forEach(candidate => {
+
+        const row =
+          document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${candidate.rank}</td>
+          <td>${candidate.normalized_score}</td>
+          <td>${candidate.shift}</td>
+        `;
+
+        body.appendChild(row);
+
+      });
+
+    }
+  );
+
+  }
 
 
     if (!data.success) {
