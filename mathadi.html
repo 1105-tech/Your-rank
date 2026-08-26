@@ -616,10 +616,12 @@ if (!consentCheckbox.checked) {
     alert("Please select your gender.");
     return;
   }
-gtag('event', 'response_submit', {
-  event_category: 'RankChase',
-  event_label: 'Mathadi Exam'
-});
+if (typeof gtag === 'function') {
+  gtag('event', 'response_submit', {
+    event_category: 'RankChase',
+    event_label: 'Mathadi Exam'
+  });
+  }
 
   const submitBtn =
     document.getElementById("submitBtn");
