@@ -781,6 +781,44 @@ shiftNames.forEach(shiftName => {
   });
 
 });
+    // CATEGORY-WISE TOP 10
+// ========================================
+
+const categoryTop10Bodies = {
+  SC: document.getElementById("categoryScTop10Body"),
+  OBC: document.getElementById("categoryObcTop10Body"),
+  SEBC: document.getElementById("categorySebcTop10Body"),
+  VJA: document.getElementById("categoryVjaTop10Body"),
+  ST: document.getElementById("categoryStTop10Body")
+};
+
+Object.entries(categoryTop10Bodies).forEach(
+  ([category, body]) => {
+
+    if (!body) return;
+
+    body.innerHTML = "";
+
+    const candidates =
+      data.category_top10?.[category] || [];
+
+    candidates.forEach(candidate => {
+
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${candidate.rank}</td>
+        <td>${candidate.score}</td>
+        <td>${candidate.gender}</td>
+        <td>${candidate.horizontal_reservation}</td>
+      `;
+
+      body.appendChild(row);
+
+    });
+
+  }
+);
 // ========================================
 // OVERALL NORMALISED RANK
 // ========================================
