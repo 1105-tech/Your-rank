@@ -306,85 +306,86 @@
     <tbody id="shiftTop10Body"></tbody>
   </table>
   </div>
-      <div class="top-section">
-  <h3>Category-wise Top 10</h3>
+      <div class="top-section"> 
+        <h3>Overall Normalised Rank</h3>
 
-  <h4>Open Top 10</h4>
-  <table>
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>Score</th>
-        <th>Gender</th>
-        <th>Horizontal Reservation</th>
-      </tr>
-    </thead>
-    <tbody id="categoryOpenTop10Body"></tbody>
-  </table>
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Normalised Score</th>
+      <th>Shift</th>
+    </tr>
+  </thead>
 
-  <h4>SC Top 10</h4>
-  <table>
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>Score</th>
-        <th>Gender</th>
-        <th>Horizontal Reservation</th>
-      </tr>
-    </thead>
-    <tbody id="categoryScTop10Body"></tbody>
-  </table>
+  <tbody id="overallNormalizedRankBody"></tbody>
+</table>
+<h3>Category-wise Top 10</h3>
 
-  <h4>OBC Top 10</h4>
-  <table>
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>Score</th>
-        <th>Gender</th>
-        <th>Horizontal Reservation</th>
-      </tr>
-    </thead>
-    <tbody id="categoryObcTop10Body"></tbody>
-  </table>
+<h4>SC Top 10</h4>
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Score</th>
+      <th>Gender</th>
+      <th>Horizontal Reservation</th>
+    </tr>
+  </thead>
+  <tbody id="categoryScTop10Body"></tbody>
+</table>
 
-  <h4>SEBC Top 10</h4>
-  <table>
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>Score</th>
-        <th>Gender</th>
-        <th>Horizontal Reservation</th>
-      </tr>
-    </thead>
-    <tbody id="categorySebcTop10Body"></tbody>
-  </table>
+<h4>OBC Top 10</h4>
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Score</th>
+      <th>Gender</th>
+      <th>Horizontal Reservation</th>
+    </tr>
+  </thead>
+  <tbody id="categoryObcTop10Body"></tbody>
+</table>
 
-  <h4>VJA Top 10</h4>
-  <table>
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>Score</th>
-        <th>Gender</th>
-        <th>Horizontal Reservation</th>
-      </tr>
-    </thead>
-    <tbody id="categoryVjaTop10Body"></tbody>
-  </table>
+<h4>SEBC Top 10</h4>
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Score</th>
+      <th>Gender</th>
+      <th>Horizontal Reservation</th>
+    </tr>
+  </thead>
+  <tbody id="categorySebcTop10Body"></tbody>
+</table>
 
-  <h4>ST Top 10</h4>
-  <table>
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>Score</th>
-        <th>Gender</th>
-        <th>Horizontal Reservation</th>
-      </tr>
-    </thead>
-    <tbody id="categoryStTop10Body"></tbody>
+<h4>VJA Top 10</h4>
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Score</th>
+      <th>Gender</th>
+      <th>Horizontal Reservation</th>
+    </tr>
+  </thead>
+  <tbody id="categoryVjaTop10Body"></tbody>
+</table>
+
+<h4>ST Top 10</h4>
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Score</th>
+      <th>Gender</th>
+      <th>Horizontal Reservation</th>
+    </tr>
+  </thead>
+  <tbody id="categoryStTop10Body"></tbody>
+</table>
   </table>
       </div>
     </tbody>
@@ -889,35 +890,29 @@ shiftNames.forEach(shiftName => {
   });
 
 });
-const categoryBodies = {
-  Open: document.getElementById("categoryOpenTop10Body"),
-  SC: document.getElementById("categoryScTop10Body"),
-  OBC: document.getElementById("categoryObcTop10Body"),
-  SEBC: document.getElementById("categorySebcTop10Body"),
-  VJA: document.getElementById("categoryVjaTop10Body"),
-  ST: document.getElementById("categoryStTop10Body")
-};
+// ========================================
+// OVERALL NORMALISED RANK
+// ========================================
 
-Object.entries(categoryBodies).forEach(([category, body]) => {
+const overallNormalizedBody =
+  document.getElementById("overallNormalizedRankBody");
 
-  body.innerHTML = "";
+overallNormalizedBody.innerHTML = "";
 
-  const candidates =
-    data.category_top10?.[category] || [];
+const normalizedCandidates =
+  data.overall_normalized_rank || [];
 
-  candidates.forEach(candidate => {
+normalizedCandidates.forEach(candidate => {
 
-    const row = document.createElement("tr");
+  const row = document.createElement("tr");
 
-    row.innerHTML = `
-      <td>${candidate.rank}</td>
-      <td>${candidate.score}</td>
-      <td>${candidate.gender}</td>
-      <td>${candidate.horizontal_reservation}</td>
-    `;
+  row.innerHTML = `
+    <td>${candidate.rank}</td>
+    <td>${candidate.normalized_score}</td>
+    <td>${candidate.shift}</td>
+  `;
 
-    body.appendChild(row);
-  });
+  overallNormalizedBody.appendChild(row);
 
 });
     result.style.display = "block";
