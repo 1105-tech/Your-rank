@@ -908,6 +908,25 @@ row.innerHTML = `
   shiftTop10Container.appendChild(shiftSection);
 
 });
+    // SHIFT CANDIDATES COUNT
+// ========================================
+
+const shiftCandidateCounts = {
+  shift29_1Candidates: data.shift29_1_candidates,
+  shift29_2Candidates: data.shift29_2_candidates,
+  shift29_3Candidates: data.shift29_3_candidates,
+  shift30_1Candidates: data.shift30_1_candidates,
+  shift30_2Candidates: data.shift30_2_candidates,
+  shift30_3Candidates: data.shift30_3_candidates
+};
+
+Object.entries(shiftCandidateCounts).forEach(([id, value]) => {
+  const element = document.getElementById(id);
+
+  if (element) {
+    element.textContent = value ?? "-";
+  }
+});
     // CATEGORY-WISE TOP 10
 // ========================================
 
