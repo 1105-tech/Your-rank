@@ -774,8 +774,8 @@ overallTop10Body.innerHTML = "";
   row.innerHTML = `
     <td>${candidate.rank}</td>
     <td>${candidate.score}</td>
-    <td>${candidate.category}</td>
-    <td>${candidate.gender}</td>
+    <td>${candidate.category || "-"}</td>
+    <td>${candidate.gender || "-"}</td>
   `;
 
   overallTop10Body.appendChild(row);
