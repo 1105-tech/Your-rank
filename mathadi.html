@@ -847,11 +847,12 @@ shiftNames.forEach(shiftName => {
     const row =
       document.createElement("tr");
 
- row.innerHTML = `
+row.innerHTML = `
   <td>${candidate.rank}</td>
   <td>${candidate.score}</td>
-  <td>${candidate.shift || "-"}</td>
-  <td>${candidate.gender}</td>
+  <td>${candidate.category || "-"}</td>
+  <td>${candidate.gender || "-"}</td>
+  <td>${candidate.horizontal_reservation || "-"}</td>
 `;
 
     tbody.appendChild(row);
