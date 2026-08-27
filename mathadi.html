@@ -135,21 +135,28 @@
   font-size: 12px;
   color: #666;
   line-height: 1.5;
-  text-align: center;
+  width: 100%;
 }
 
 .consent-box label {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   gap: 8px;
   cursor: pointer;
-  text-align: left;
+  width: 100%;
 }
 
 .consent-box input[type="checkbox"] {
-  margin-top: 2px;
+  width: auto;
+  margin: 0;
   flex-shrink: 0;
+}
+
+.consent-box label span {
+  display: block;
+  text-align: center;
+  white-space: normal;
 }
     .top-section {
   margin-top: 20px;
