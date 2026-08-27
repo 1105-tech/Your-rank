@@ -192,6 +192,40 @@ td {
 th {
   background: #eee;
 }
+    .rank-table {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.rank-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.rank-table th,
+.rank-table td {
+  padding: 10px 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.rank-table th {
+  background: #eee;
+  font-weight: bold;
+}
+
+.rank-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+
+.rank-table td:last-child {
+  font-weight: bold;
+}
   </style>
 </head>
 
@@ -490,34 +524,63 @@ th {
 
       </div>
 
-      <div class="row">
-        <span>Overall Rank</span>
-        <span id="overallRank"></span>
-      </div>
+      <div class="rank-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Rank / Candidates</th>
+        <th>Value</th>
+      </tr>
+    </thead>
 
-      <div class="row">
-        <span>Shift Rank</span>
-        <span id="shiftRank"></span>
-      </div>
+    <tbody>
+      <tr>
+        <td>Overall Rank</td>
+        <td id="overallRank"></td>
+      </tr>
 
-      <div class="row">
-        <span>Category Rank</span>
-        <span id="categoryRank"></span>
-      </div>
-      <div class="row">
-  <span>Category Candidates</span>
-  <span id="categoryCandidates"></span>
-      </div>
+      <tr>
+        <td>Shift Rank</td>
+        <td id="shiftRank"></td>
+      </tr>
 
-      <div class="row">
-        <span>Total Candidates</span>
-        <span id="totalCandidates"></span>
-      </div>
+      <tr>
+        <td>Category Rank</td>
+        <td id="categoryRank"></td>
+      </tr>
 
-            <div class="row">
-        <span>Shift Candidates</span>
-        <span id="shiftCandidates"></span>
-      </div>
+      <tr>
+        <td>29 July Shift 1 Candidates</td>
+        <td id="shift29_1Candidates"></td>
+      </tr>
+
+      <tr>
+        <td>29 July Shift 2 Candidates</td>
+        <td id="shift29_2Candidates"></td>
+      </tr>
+
+      <tr>
+        <td>29 July Shift 3 Candidates</td>
+        <td id="shift29_3Candidates"></td>
+      </tr>
+
+      <tr>
+        <td>30 July Shift 1 Candidates</td>
+        <td id="shift30_1Candidates"></td>
+      </tr>
+
+      <tr>
+        <td>30 July Shift 2 Candidates</td>
+        <td id="shift30_2Candidates"></td>
+      </tr>
+
+      <tr>
+        <td>30 July Shift 3 Candidates</td>
+        <td id="shift30_3Candidates"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
       <div class="row">
         <span>29 July Shift 1 Candidates</span>
@@ -741,15 +804,19 @@ document.getElementById("normalizedCategoryRank").textContent =
   data.normalized_category_rank ?? "-";
 
     document.getElementById("overallRank").textContent =
-      data.overall_rank ?? "-";
+  data.overall_rank != null && data.total_candidates != null
+    ? `${data.overall_rank} / ${data.total_candidates}`
+    : "-";
 
-    document.getElementById("shiftRank").textContent =
-      data.shift_rank ?? "-";
+document.getElementById("shiftRank").textContent =
+  data.shift_rank != null && data.shift_candidates != null
+    ? `${data.shift_rank} / ${data.shift_candidates}`
+    : "-";
 
-    document.getElementById("categoryRank").textContent =
-      data.category_rank ?? "-";
-    document.getElementById("categoryCandidates").textContent =
-  data.category_candidates ?? "-";
+document.getElementById("categoryRank").textContent =
+  data.category_rank != null && data.category_candidates != null
+    ? `${data.category_rank} / ${data.category_candidates}`
+    : "-";
 
 
     document.getElementById("totalCandidates").textContent =
