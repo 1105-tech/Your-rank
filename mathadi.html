@@ -147,6 +147,40 @@
 .consent-box input[type="checkbox"] {
   margin-top: 2px;
   flex-shrink: 0;
+} 
+    .top-section {
+  margin-top: 20px;
+}
+
+.top-section h3 {
+  margin: 18px 0 10px;
+}
+
+.shift-section {
+  margin-top: 20px;
+}
+
+.shift-section h4 {
+  margin: 15px 0 10px;
+  font-size: 17px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+  font-size: 13px;
+}
+
+th,
+td {
+  padding: 8px 5px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background: #eee;
 }
   </style>
 </head>
@@ -273,7 +307,9 @@
         <span>Category</span>
         <span id="categoryResult"></span>
       </div>
-      <div class="top-section">
+  <div class="top-section">
+
+  <!-- Overall Top 10 -->
   <h3>Overall Top 10</h3>
 
   <table id="overallTop10Table">
@@ -286,40 +322,36 @@
         <th>Horizontal Reservation</th>
       </tr>
     </thead>
+    <tbody id="overallTop10Body"></tbody>
+  </table>
 
-    <tbody id="overallTop10Body">
-  <div class="top-section">
+
+  <!-- Shift-wise Top 10 -->
   <h3>Shift-wise Top 10</h3>
 
-  <table id="shiftTop10Table">
-    <thead>
-      <tr>
-        <th>Shift</th>
-        <th>Rank</th>
-        <th>Score</th>
-        <th>Category</th>
-        <th>Gender</th>
-        <th>Horizontal Reservation</th>
-      </tr>
-    </thead>
+  <div id="shiftTop10Container"></div>
 
-    <tbody id="shiftTop10Body"></tbody>
-  </table>
-  <div class="top-section" id="overallNormalizedSection"> 
-  <h3>Overall Normalised Rank</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Rank</th>
-      <th>Normalised Score</th>
-      <th>Shift</th> 
-      <th>Category</th>
-    </tr>
-  </thead>
+  <!-- Overall Normalised Rank -->
+  <div class="top-section" id="overallNormalizedSection">
 
-  <tbody id="overallNormalizedRankBody"></tbody>
-</table>
+    <h3>Overall Normalised Rank</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Normalised Score</th>
+          <th>Shift</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+
+      <tbody id="overallNormalizedRankBody"></tbody>
+    </table>
+
+  </div>
+
 <h3>Category-wise Top 10</h3>
 
 <h4>SC Top 10</h4>
@@ -750,10 +782,10 @@ overallTop10Body.innerHTML = "";
 
   overallTop10Body.appendChild(row);
 });
-    const shiftTop10Body =
-  document.getElementById("shiftTop10Body");
+  const shiftTop10Container =
+  document.getElementById("shiftTop10Container");
 
-shiftTop10Body.innerHTML = "";
+shiftTop10Container.innerHTML = "";
 
 const shiftNames = [
   "29 July Shift 1",
@@ -766,14 +798,56 @@ const shiftNames = [
 
 shiftNames.forEach(shiftName => {
 
-  const candidates = data.shift_top10?.[shiftName] || [];
+  const candidates =
+    data.shift_top10?.[shiftName] || [];
+
+  if (!candidates.length) {
+    return;
+  }
+
+  const shiftSection =
+    document.createElement("div");
+
+  shiftSection.className = "shift-section";
+
+
+  const heading =
+    document.createElement("h4");
+
+  heading.textContent =
+    shiftName + " Top 10";
+
+  shiftSection.appendChild(heading);
+
+
+  const table =
+    document.createElement("table");
+
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Score</th>
+        <th>Category</th>
+        <th>Gender</th>
+        <th>Horizontal Reservation</th>
+      </tr>
+    </thead>
+
+    <tbody></tbody>
+  `;
+
+
+  const tbody =
+    table.querySelector("tbody");
+
 
   candidates.forEach(candidate => {
 
-    const row = document.createElement("tr");
+    const row =
+      document.createElement("tr");
 
     row.innerHTML = `
-      <td>${shiftName}</td>
       <td>${candidate.rank}</td>
       <td>${candidate.score}</td>
       <td>${candidate.category}</td>
@@ -781,9 +855,14 @@ shiftNames.forEach(shiftName => {
       <td>${candidate.horizontal_reservation}</td>
     `;
 
-    shiftTop10Body.appendChild(row);
+    tbody.appendChild(row);
 
   });
+
+
+  shiftSection.appendChild(table);
+
+  shiftTop10Container.appendChild(shiftSection);
 
 });
     // CATEGORY-WISE TOP 10
