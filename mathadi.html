@@ -360,8 +360,8 @@ th {
     <tr>
       <th>Rank</th>
       <th>Score</th>
-      <th>Gender</th>
       <th>Shift</th>
+      <th>Gender</th>
     </tr>
   </thead>
   <tbody id="categoryScTop10Body"></tbody>
@@ -373,8 +373,8 @@ th {
     <tr>
       <th>Rank</th>
       <th>Score</th>
+       <th>Shift</th>
       <th>Gender</th>
-      <th>Shift</th>
     </tr>
   </thead>
   <tbody id="categoryObcTop10Body"></tbody>
@@ -386,8 +386,8 @@ th {
     <tr>
       <th>Rank</th>
       <th>Score</th>
+       <th>Shift</th>
       <th>Gender</th>
-      <th>Shift</th>
     </tr>
   </thead>
   <tbody id="categorySebcTop10Body"></tbody>
@@ -399,9 +399,9 @@ th {
     <tr>
       <th>Rank</th>
       <th>Score</th>
+       <th>Shift</th>
       <th>Gender</th>
-      <th>shift</th>
-    </tr>
+     </tr>
   </thead>
   <tbody id="categoryVjaTop10Body"></tbody>
 </table>
@@ -412,8 +412,8 @@ th {
     <tr>
       <th>Rank</th>
       <th>Score</th>
+       <th>Shift</th>
       <th>Gender</th>
-      <th>Shift</th>
     </tr>
   </thead>
   <tbody id="categoryStTop10Body"></tbody>
@@ -847,13 +847,12 @@ shiftNames.forEach(shiftName => {
     const row =
       document.createElement("tr");
 
-    row.innerHTML = `
-      <td>${candidate.rank}</td>
-      <td>${candidate.score}</td>
-      <td>${candidate.category}</td>
-      <td>${candidate.gender}</td>
-      <td>${candidate.horizontal_reservation}</td>
-    `;
+ row.innerHTML = `
+  <td>${candidate.rank}</td>
+  <td>${candidate.score}</td>
+  <td>${candidate.shift || "-"}</td>
+  <td>${candidate.gender}</td>
+`;
 
     tbody.appendChild(row);
 
