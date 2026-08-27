@@ -329,6 +329,7 @@ th {
         <th>Score</th>
         <th>Category</th>
         <th>Gender</th>
+        <th>Shift</th>
       </tr>
     </thead>
     <tbody id="overallTop10Body"></tbody>
@@ -786,6 +787,7 @@ overallTop10Body.innerHTML = "";
     <td>${candidate.score}</td>
     <td>${candidate.category || "-"}</td>
     <td>${candidate.gender || "-"}</td>
+     <td>${candidate.shift || "-"}</td>
   `;
 
   overallTop10Body.appendChild(row);
