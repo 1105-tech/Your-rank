@@ -953,25 +953,27 @@ row.innerHTML = `
 const overallNormalizedBody =
   document.getElementById("overallNormalizedRankBody");
 
-overallNormalizedBody.innerHTML = "";
+if (overallNormalizedBody) {
+  overallNormalizedBody.innerHTML = "";
 
-const normalizedCandidates =
-  data.overall_normalized_rank || [];
+  const normalizedCandidates =
+    data.overall_normalized_rank || [];
 
-normalizedCandidates.forEach(candidate => {
+  normalizedCandidates.forEach(candidate => {
 
-  const row = document.createElement("tr");
+    const row = document.createElement("tr");
 
-  row.innerHTML = `
-    <td>${candidate.rank}</td>
-    <td>${candidate.normalized_score}</td>
-    <td>${candidate.shift}</td>
-    <td>${candidate.category}</td>
-  `;
+    row.innerHTML = `
+      <td>${candidate.rank}</td>
+      <td>${candidate.normalized_score}</td>
+      <td>${candidate.shift}</td>
+      <td>${candidate.category}</td>
+    `;
 
-  overallNormalizedBody.appendChild(row);
+    overallNormalizedBody.appendChild(row);
 
-});
+  });
+}
     const overallNormalizedSection =
   document.getElementById("overallNormalizedSection");
 
