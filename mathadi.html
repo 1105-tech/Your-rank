@@ -885,7 +885,7 @@ Object.entries(categoryTop10Bodies).forEach(
 
     const candidates =
       data.category_top10?.[category] || [];
-
+console.log("CATEGORY CANDIDATES:", category, candidates);
     candidates.forEach(candidate => {
 
       const row = document.createElement("tr");
