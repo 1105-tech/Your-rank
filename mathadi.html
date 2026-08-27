@@ -803,20 +803,35 @@ document.getElementById("normalizedRank").textContent =
 document.getElementById("normalizedCategoryRank").textContent =
   data.normalized_category_rank ?? "-";
 
-    document.getElementById("overallRank").textContent =
-  data.overall_rank != null && data.total_candidates != null
-    ? `${data.overall_rank} / ${data.total_candidates}`
-    : "-";
+ const overallRankElement =
+  document.getElementById("overallRank");
 
-document.getElementById("shiftRank").textContent =
-  data.shift_rank != null && data.shift_candidates != null
-    ? `${data.shift_rank} / ${data.shift_candidates}`
-    : "-";
+const shiftRankElement =
+  document.getElementById("shiftRank");
 
-document.getElementById("categoryRank").textContent =
-  data.category_rank != null && data.category_candidates != null
-    ? `${data.category_rank} / ${data.category_candidates}`
-    : "-";
+const categoryRankElement =
+  document.getElementById("categoryRank");
+
+if (overallRankElement) {
+  overallRankElement.textContent =
+    data.overall_rank != null && data.total_candidates != null
+      ? `${data.overall_rank} / ${data.total_candidates}`
+      : "-";
+}
+
+if (shiftRankElement) {
+  shiftRankElement.textContent =
+    data.shift_rank != null && data.shift_candidates != null
+      ? `${data.shift_rank} / ${data.shift_candidates}`
+      : "-";
+}
+
+if (categoryRankElement) {
+  categoryRankElement.textContent =
+    data.category_rank != null && data.category_candidates != null
+      ? `${data.category_rank} / ${data.category_candidates}`
+      : "-";
+}
 
 
     document.getElementById("totalCandidates").textContent =
