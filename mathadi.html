@@ -975,23 +975,29 @@ const overallNormalizedBody =
 if (overallNormalizedBody) {
   overallNormalizedBody.innerHTML = "";
 
-  const normalizedCandidates =
-    data.overall_normalized_rank || [];
+  const normalizedRank = data.overall_normalized_rank;
 
-  normalizedCandidates.forEach(candidate => {
-
+  if (normalizedRank !== null && normalizedRank !== undefined) {
     const row = document.createElement("tr");
 
     row.innerHTML = `
-      <td>${candidate.rank}</td>
-      <td>${candidate.normalized_score}</td>
-      <td>${candidate.shift}</td>
-      <td>${candidate.category}</td>
+      <td>${normalizedRank}</td>
+      <td>${data.normalized_score ?? "-"}</td>
+      <td>${data.shift ?? "-"}</td>
+      <td>${data.category ?? "-"}</td>
     `;
 
     overallNormalizedBody.appendChild(row);
+  }
+}
 
-  });
+const overallNormalizedSection =
+  document.getElementById("overallNormalizedSection");
+
+if (overallNormalizedSection) {
+  overallNormalizedSection.style.display =
+    data.total_candidates >= 300 ? "block" : "none";
+}
 }
     const overallNormalizedSection =
   document.getElementById("overallNormalizedSection");
