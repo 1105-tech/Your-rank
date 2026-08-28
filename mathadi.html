@@ -683,6 +683,11 @@ window.dataLayer.push({
 
     const data =
       await response.json();
+    if (!data.success) {
+  throw new Error(
+    data.error || "Submission failed."
+  );
+}
     // ========================================
 // NORMALISED CATEGORY-WISE SCORE LIST
 // ========================================
