@@ -692,22 +692,10 @@ window.dataLayer.push({
 // NORMALISED CATEGORY-WISE SCORE LIST
 // ========================================
 
-const normalizedListResponse =
-  await fetch(
-    workerUrl + "/normalized-category-list"
-  );
-
-const normalizedListData =
-  await normalizedListResponse.json();
 
 
 
 
-    if (!data.success) {
-      throw new Error(
-        data.error || "Submission failed."
-      );
-    }
 
 
     document.getElementById("name").textContent =
