@@ -351,6 +351,20 @@ th {
         <span>Category</span>
         <span id="categoryResult"></span>
       </div>
+      <div class="row">
+  <span>Inspector Candidates</span>
+  <span id="inspectorCount">-</span>
+</div>
+
+<div class="row">
+  <span>Accountant Candidates</span>
+  <span id="accountantCount">-</span>
+</div>
+
+<div class="row">
+  <span>Stenotypist Candidates</span>
+  <span id="stenotypistCount">-</span>
+</div>
   <div class="top-section">
 
   <!-- Overall Top 10 -->
@@ -692,6 +706,29 @@ window.dataLayer.push({
   throw new Error(
     data.error || "Submission failed."
   );
+}
+    const postCountsResponse =
+  await fetch(workerUrl + "/post-counts");
+
+const postCountsData =
+  await postCountsResponse.json();
+
+if (postCountsData.success) {
+
+  const counts = {};
+
+  postCountsData.posts.forEach(item => {
+    counts[item.post] = item.total;
+  });
+
+  document.getElementById("inspectorCount").textContent =
+    counts["Inspector"] ?? 0;
+
+  document.getElementById("accountantCount").textContent =
+    counts["Accountant"] ?? 0;
+
+  document.getElementById("stenotypistCount").textContent =
+    counts["Stenotypist"] ?? 0;
 }
     // ========================================
 // NORMALISED CATEGORY-WISE SCORE LIST
