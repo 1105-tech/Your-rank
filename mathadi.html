@@ -339,7 +339,7 @@ th {
 
       <div class="row">
         <span>Post</span>
-        <span id="post"></span>
+        <span id="postResult"></span>
       </div>
 
       <div class="row">
@@ -768,6 +768,8 @@ if (postCountsData.success) {
 
     document.getElementById("categoryResult").textContent =
       data.category || "-";
+    document.getElementById("postResult").textContent =
+  data.post || data.candidate?.post || "-";
 
     document.getElementById("genderResult").textContent =
       data.gender || "-";
